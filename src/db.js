@@ -3,7 +3,7 @@ const {Sequelize, Op} = require('sequelize');
 const pg = require("pg");
 require('dotenv').config();
 
-/* const  modelCorporativo = require("./models/Corporativo"); */
+const  modelCorporativo = require("./models/Corporativo");
 const  modelCiudad = require("./models/Ciudad");
 const  modelEnvio = require("./models/Envio");
 const  modelEvaluaciones = require("./models/Evaluaciones");
@@ -37,7 +37,7 @@ const connectionString = `postgres://${process.env.DB_USER}:${process.env.DB_PAS
 var connection = 0;
 isProduction ? connection = process.env.DATABASE_URL : connection = connectionString;
 
-/* const sequelize = new Sequelize(connection,{
+const sequelize = new Sequelize(connection,{
       logging: false   //Loging Deshabilitado
   });
   try {
@@ -45,19 +45,19 @@ isProduction ? connection = process.env.DATABASE_URL : connection = connectionSt
       console.log('Conexion a la Base de Datos Exitosa.');
     } catch (error) {
       console.error('Unable to connect to the database:', error);
-    }  */ 
+    }  
 
-const sequelize = new pg.Pool({
-  connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+/* const sequelize = new pg.Pool({
+  connectionString: connection,
   ssl: isProduction,
 });
 
 // display message on success if successful
 sequelize.on('connect', () => {
   console.log('Teamwork Database connected successfully!');
-});
+}); */
 
-//modelCorporativo(sequelize);
+modelCorporativo(sequelize);
 modelCiudad(sequelize);
 modelEnvio(sequelize);
 modelEvaluaciones(sequelize);
@@ -86,15 +86,15 @@ modelSesionRestaurantero(sequelize);
 modelSesionRepartidor(sequelize);
 
 
-let {/*Corporativo,  Ciudad, */ Envios, Evaluaciones, ImgRest, Menu, Restaurantes, 
+let {Corporativo, /* Ciudad, */ Envios, Evaluaciones, ImgRest, Menu, Restaurantes, 
     TipodeComida, Clientefinal, Direccion, MetodosdePago, Pedidos, PedidoGrupal, 
     Platillo, IngredientesExtra, IngredientesaQuitar, Ingredientes,
     ComprasJuntas, Repartidor, ImgPlatillo, UbicacionRepartidor, RestaurantDetails, Sesion,
     ClienteRestaurantero, SesionRestaurantero, SesionRepartidor} = sequelize.models;
 
 /* Relaciones de DB */
-/* Corporativo.hasMany(Restaurantes);
-Restaurantes.belongsTo(Corporativo); */
+Corporativo.hasMany(Restaurantes);
+Restaurantes.belongsTo(Corporativo);
 Restaurantes.hasOne(TipodeComida);
 TipodeComida.belongsTo(Restaurantes);
 Envios.belongsTo(Repartidor);
@@ -159,8 +159,8 @@ Clientefinal.hasOne(Sesion);
 
 ClienteRestaurantero.belongsToMany(Restaurantes, {through:"Usuario-Restaurantes"});
 Restaurantes.belongsToMany(ClienteRestaurantero, {through:"Usuario-Restaurantes"});
-/* ClienteRestaurantero.belongsTo(Corporativo);
-Corporativo.hasMany(ClienteRestaurantero); */
+ClienteRestaurantero.belongsTo(Corporativo);
+Corporativo.hasMany(ClienteRestaurantero);
 SesionRestaurantero.belongsTo(ClienteRestaurantero);
 ClienteRestaurantero.hasOne(SesionRestaurantero);
 
