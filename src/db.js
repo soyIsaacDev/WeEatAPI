@@ -1,5 +1,6 @@
 
 const {Sequelize, Op} = require('sequelize');
+const pg = require("pg");
 require('dotenv').config();
 
 const  modelCorporativo = require("./models/Corporativo");
@@ -36,7 +37,7 @@ const connectionString = `postgres://${process.env.DB_USER}:${process.env.DB_PAS
 var connection = 0;
 isProduction ? connection = process.env.DATABASE_URL : connection = connectionString;
 
-const sequelize = new Sequelize(connection,{
+/* const sequelize = new Sequelize(connection,{
       logging: false   //Loging Deshabilitado
   });
   try {
@@ -44,7 +45,17 @@ const sequelize = new Sequelize(connection,{
       console.log('Conexion a la Base de Datos Exitosa.');
     } catch (error) {
       console.error('Unable to connect to the database:', error);
-    }  
+    }  */ 
+
+const sequelize = new pg.Pool({
+  connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+  ssl: isProduction,
+});
+
+// display message on success if successful
+sequelize.on('connect', () => {
+  console.log('Teamwork Database connected successfully!');
+});
 
 modelCorporativo(sequelize);
 modelCiudad(sequelize);
