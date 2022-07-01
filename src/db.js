@@ -1,6 +1,6 @@
 
 const {Sequelize, Op} = require('sequelize');
-const pg = require("pg");
+const { Client } = require("pg");
 require('dotenv').config();
 
 const  modelCorporativo = require("./models/Corporativo");
@@ -38,7 +38,8 @@ var connection = 0;
 isProduction ? connection = process.env.DATABASE_URL : connection = connectionString;
 
 const sequelize = new Sequelize(connection,{
-      logging: false   //Loging Deshabilitado
+      logging: false,   //Loging Deshabilitado
+      ssl: isProduction
   });
   try {
       sequelize.authenticate();
@@ -46,6 +47,25 @@ const sequelize = new Sequelize(connection,{
     } catch (error) {
       console.error('Unable to connect to the database:', error);
     }  
+    
+sslmode=require
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
+client.connect();
+
+client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
+  if (err) throw err;
+  for (let row of res.rows) {
+    console.log(JSON.stringify(row));
+  }
+  client.end();
+});
 
 /* const sequelize = new pg.Pool({
   connectionString: connection,
