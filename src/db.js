@@ -39,7 +39,10 @@ isProduction ? connection = process.env.DATABASE_URL : connection = connectionSt
 
 const sequelize = new Sequelize(connection,{
       logging: false,   //Loging Deshabilitado
-      ssl: isProduction
+      ssl:{
+        isProduction,
+        rejectUnauthorized: false
+      } 
   });
   try {
       sequelize.authenticate();
@@ -48,8 +51,7 @@ const sequelize = new Sequelize(connection,{
       console.error('Unable to connect to the database:', error);
     }  
     
-sslmode=require
-const client = new Client({
+/* const client = new Client({
   connectionString: process.env.DATABASE_URL,
   
   ssl: {
@@ -65,7 +67,7 @@ client.query('SELECT table_schema,table_name FROM information_schema.tables;', (
     console.log(JSON.stringify(row));
   }
   client.end();
-});
+}); */
 
 /* const sequelize = new pg.Pool({
   connectionString: connection,
