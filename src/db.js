@@ -39,10 +39,13 @@ isProduction ? connection = process.env.DATABASE_URL : connection = connectionSt
 
 const sequelize = new Sequelize(connection,{
       logging: false,   //Loging Deshabilitado
-      ssl:{
-        isProduction,
-        rejectUnauthorized: false
-      } 
+      dialectOptions: {
+        ssl:{
+          require:true,
+          rejectUnauthorized: false
+        } 
+      }
+      
   });
   try {
       sequelize.authenticate();
