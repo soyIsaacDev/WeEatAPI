@@ -46,13 +46,13 @@ const sequelize = new Sequelize(connection,{
   });
   try {
       sequelize.authenticate();
-      sequelize.connect();
+      /* sequelize.connect(); */
       console.log('Conexion a la Base de Datos Exitosa.');
     } catch (error) {
       console.error('Unable to connect to the database:', error);
     }  
     
-const client = new Client({
+/* const client = new Client({
   connectionString: process.env.DATABASE_URL,
   
   ssl: {
@@ -68,7 +68,7 @@ client.query('SELECT table_schema,table_name FROM information_schema.tables;', (
     console.log(JSON.stringify(row));
   }
   client.end();
-});
+}); */
 
 /* const sequelize = new pg.Pool({
   connectionString: connection,
