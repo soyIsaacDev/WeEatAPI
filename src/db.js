@@ -46,6 +46,7 @@ const sequelize = new Sequelize(connection,{
   });
   try {
       sequelize.authenticate();
+      sequelize.connect();
       console.log('Conexion a la Base de Datos Exitosa.');
     } catch (error) {
       console.error('Unable to connect to the database:', error);
