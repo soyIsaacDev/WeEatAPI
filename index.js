@@ -1,6 +1,6 @@
 //var compression = require('compression');
 var helmet = require('helmet');
-
+var cors = require('cors')
 const express = require('express');
 
 const { index, restaurantes, envios, repartidor, clientefinal, auth, 
@@ -11,7 +11,19 @@ var session = require('express-session');
 var db = require('./src/db');
 var path = require('path');
 
+var allowlist = ['https://weeatapi.herokuapp.com/', 'http://localhost:4000']
 
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  if (allowlist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false } // disable CORS for this request
+  }
+  callback(null, corsOptions) // callback expects two parameters: error and options
+}
+
+app.use(cors());
 app.set('view engine', 'ejs');
 app.use(helmet());
 app.use(express.static(path.join(__dirname, 'public')));

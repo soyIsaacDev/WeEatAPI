@@ -3,3 +3,4 @@ API/resources/
 npm-debug.log
 .DS_Store
 /*.env
+/resources/

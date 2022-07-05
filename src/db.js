@@ -39,12 +39,12 @@ isProduction ? connection = process.env.DATABASE_URL : connection = connectionSt
 
 const sequelize = new Sequelize(connection,{
       logging: false,   //Loging Deshabilitado
-      dialectOptions: {
+      /* dialectOptions: {
         ssl:{
           require:true,
           rejectUnauthorized: false
         } 
-      }
+      } */
       
   });
   try {
