@@ -11,7 +11,7 @@ var session = require('express-session');
 var db = require('./src/db');
 var path = require('path');
 
-var allowlist = ['https://weeatapi.herokuapp.com/', 'http://localhost:4000']
+var allowlist = ['https://weeatcliente.onrender.com/', 'https://weeat-restaurantes.onrender.com/']
 
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
