@@ -27,7 +27,7 @@ var corsOptionsDelegate = function (req, callback) {
   res.json({msg: 'This is CORS-enabled for an allowed domain.'})
 }); */
 
-app.use(cors());
+app.use(cors(corsOptionsDelegate));
 app.set('view engine', 'ejs');
 app.use(helmet());
 app.use(express.static(path.join(__dirname, 'public')));
