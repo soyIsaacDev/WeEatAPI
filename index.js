@@ -12,7 +12,7 @@ var db = require('./src/db');
 var path = require('path');
 
 
-/* var allowlist = ['https://weeatcliente.onrender.com/', 'https://weeat-restaurantes.onrender.com/']
+var allowlist = ['https://weeatcliente.onrender.com/', 'https://weeat-restaurantes.onrender.com/']
 
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
@@ -24,25 +24,9 @@ var corsOptionsDelegate = function (req, callback) {
   callback(null, corsOptions) // callback expects two parameters: error and options
 }
 
-app.get('/products/:id', cors(corsOptionsDelegate), function (req, res, next) {
+app.use('/', cors(corsOptionsDelegate), function (req, res, next) {
   res.json({msg: 'This is CORS-enabled for an allowed domain.'})
 });
-
-app.use('/', cors(corsOptionsDelegate)); */
-var allowedOrigins = ['https://weeatcliente.onrender.com/', 'https://weeat-restaurantes.onrender.com/'];
-app.use(cors({
-  origin: function(origin, callback){
-    // allow requests with no origin 
-    // (like mobile apps or curl requests)
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){
-      var msg = 'The CORS policy for this site does not ' +
-                'allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  }
-}));
 
 app.set('view engine', 'ejs');
 app.use(helmet());
