@@ -1,6 +1,6 @@
 //var compression = require('compression');
 var helmet = require('helmet');
-var cors = require('cors')
+var cors = require('cors');
 const express = require('express');
 
 const { index, restaurantes, envios, repartidor, clientefinal, auth, 
@@ -23,7 +23,11 @@ var corsOptionsDelegate = function (req, callback) {
   callback(null, corsOptions) // callback expects two parameters: error and options
 }
 
-app.use(cors());
+/* app.get('/products/:id', cors(corsOptionsDelegate), function (req, res, next) {
+  res.json({msg: 'This is CORS-enabled for an allowed domain.'})
+}); */
+
+app.use(cors(corsOptionsDelegate));
 app.set('view engine', 'ejs');
 app.use(helmet());
 app.use(express.static(path.join(__dirname, 'public')));
