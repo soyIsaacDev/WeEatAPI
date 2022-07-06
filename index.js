@@ -1,5 +1,5 @@
 //var compression = require('compression');
-var helmet = require('helmet');
+//var helmet = require('helmet');
 var cors = require('cors');
 const express = require('express');
 
@@ -30,7 +30,12 @@ app.use('/', cors(corsOptionsDelegate), function (req, res, next) {
 
 app.use(cors())
 app.set('view engine', 'ejs');
-app.use(helmet());
+/* app.use(
+  helmet({
+    crossOriginEmbedderPolicy: false,
+    // ...
+  })
+); */
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('./public'));
 //mantener sesion autenticada
