@@ -12,7 +12,7 @@ var db = require('./src/db');
 var path = require('path');
 
 
-var allowlist = ['https://weeatcliente.onrender.com/', 'https://weeat-restaurantes.onrender.com/']
+/* var allowlist = ['https://weeatcliente.onrender.com/', 'https://weeat-restaurantes.onrender.com/']
 
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
@@ -26,8 +26,14 @@ var corsOptionsDelegate = function (req, callback) {
 
 app.use('/', cors(corsOptionsDelegate), function (req, res, next) {
   res.json({msg: 'This is CORS-enabled for an allowed domain.'})
-});
+}); */
 
+app.use(
+  cors({
+      origin: ['https://weeatcliente.onrender.com/', 'https://weeat-restaurantes.onrender.com/'], 
+      credentials: true,
+  })
+);
 app.set('view engine', 'ejs');
 app.use(helmet());
 app.use(express.static(path.join(__dirname, 'public')));
