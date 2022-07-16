@@ -91,6 +91,10 @@ app.get('/sesionrestaurantero', async function(req, res) {
     const user = await ClienteRestaurantero.findOne({
       where:{ usuario: username }
     });
+    if(!user){
+      res.send({"Response": "El Usuario No Existe o Es Incorrecto"}); 
+      return
+    }
     console.log("Cliente Restaurantero sesion L-94 " + user.id + user.contraseña)
     if(password != user.contraseña){
       console.log("Contraseña Incorrecta SesionRestaurantero L-96")
@@ -113,6 +117,10 @@ app.post('/sesionrestaurantero', async function(req, res) {
     const user = await ClienteRestaurantero.findOne({
       where:{ usuario: username }
     });
+    if(!user){
+      res.send({"Response": "El Usuario No Existe o Es Incorrecto"}); 
+      return
+    }
     console.log("Cliente Restaurantero sesion L-116  Usuario " + user.id  + " Contraseña " + user.contraseña)
     if(password != user.contraseña){
       console.log("Contraseña Incorrecta SesionRestaurantero L-118")

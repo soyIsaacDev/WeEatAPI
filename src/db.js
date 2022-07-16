@@ -45,43 +45,14 @@ const sequelize = new Sequelize(connection,{
           rejectUnauthorized: false
         } 
       }
-      
-  });
+  }
+);
   try {
       sequelize.authenticate();
-      /* sequelize.connect(); */
       console.log('Conexion a la Base de Datos Exitosa.');
     } catch (error) {
       console.error('Unable to connect to the database:', error);
     }  
-    
-/* const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
-
-client.connect();
-
-client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
-  if (err) throw err;
-  for (let row of res.rows) {
-    console.log(JSON.stringify(row));
-  }
-  client.end();
-}); */
-
-/* const sequelize = new pg.Pool({
-  connectionString: connection,
-  ssl: isProduction,
-});
-
-// display message on success if successful
-sequelize.on('connect', () => {
-  console.log('Teamwork Database connected successfully!');
-}); */
 
 modelCorporativo(sequelize);
 modelCiudad(sequelize);

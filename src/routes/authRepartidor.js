@@ -63,10 +63,14 @@ app.get('/sesionrepartidor', async function(req, res) {
     const user = await Repartidor.findOne({
       where:{ usuario: username }
     });
-    console.log("Cliente Repartidor sesion L-66 " + user.id + user.contraseña)
+    console.log("Cliente Repartidor sesion L-66 " + user.id + user.contraseña);
+    if(!user){
+      res.send({"Response": "El Usuario No Existe o Es Incorrecto"}); 
+      return
+    }
     if(password != user.contraseña){
       console.log("Contraseña Incorrecta SesionRepartidor L-68")
-      res.send("Contraseña Incorrecta"); 
+      res.send({"Response": "Contraseña Incorrecta"}); 
       return}
     const sesion = await SesionRepartidor.findOne({
       where:{RepartidorId: user.id}
@@ -85,7 +89,11 @@ app.post('/SesionRepartidor', async function(req, res) {
     const user = await Repartidor.findOne({
       where:{ usuario: username }
     });
-    console.log("Cliente Restaurantero sesion L-116  Usuario " + user.id  + " Contraseña " + user.contraseña)
+    if(!user){
+      res.send({"Response": "El Usuario No Existe o Es Incorrecto"}); 
+      return
+    }
+    console.log("Cliente Repartidor sesion L-116  Usuario " + user.id  + " Contraseña " + user.contraseña)
     if(password != user.contraseña){
       console.log("Contraseña Incorrecta Sesion Repartidor L-90")
       res.send({"Response": "Contraseña Incorrecta"}); 
