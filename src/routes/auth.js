@@ -1,4 +1,5 @@
 var express = require('express');
+const res = require('express/lib/response');
 var passport = require('passport');
 //var Strategy = require('passport-local').Strategy;
 var LocalStrategy = require('passport-local');
@@ -26,6 +27,7 @@ passport.use(new LocalStrategy(
         //console.log("USUARIO DE PASSPORT LOCAL  -->>"+user.nombre)
         if(!user & !restaurantUser & !repartidor) {
           console.log("USUARIO INCORRECTO");
+          res.send({"Response": "Usuario No Existe o es Incorrecto"}); 
           return cb(null, false, { message: 'Incorrect username or password.' });
         }
 
@@ -201,9 +203,13 @@ app.post('/sesion', async function(req, res) {
     const user = await Clientefinal.findOne({
       where:{ usuario: username }
     });
+    if(!user){
+      res.send({"Response": "El Usuario No Existe o Es Incorrecto"}); 
+      return
+    }
     console.log("SesionAuth L-204 " + user.id + " " + user.contraseña)
     if(password != user.contraseña){
-      console.log("Contraseña Incorrecta SesionAuth L-206")
+      /* console.log("Contraseña Incorrecta SesionAuth L-206") */
       res.send({"Response": "Contraseña Incorrecta"}); 
       return
     }
